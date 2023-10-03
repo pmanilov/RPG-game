@@ -9,10 +9,11 @@ public class Main {
         System.out.println("Enter your name:");
         Scanner in = new Scanner(System.in);
         String name = in.next();
-        System.out.println("Please, select a class:\n" +
-                "1)Heavy knight(high defence, low attack)\n" +
-                "2)Rogue(high attack, low defence)\n" +
-                "3)Balanced warrior(medium attack and defence)");
+        System.out.println("""
+                Please, select a class:
+                1)Heavy knight(high defence, low attack)
+                2)Rogue(high attack, low defence)
+                3)Balanced warrior(medium attack and defence)""");
         int playerClass = in.nextInt();
         Player player;
         if(playerClass == 1) {
@@ -50,6 +51,6 @@ public class Main {
                 monster.attack(player);
             }
         }
-        System.out.println(name + ", you have defeated " + n + " monsters");
+        System.out.println(name + ", you have defeated " + (n - 1) + " monsters");
     }
 }

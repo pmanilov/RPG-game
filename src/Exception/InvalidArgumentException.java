@@ -1,8 +1,7 @@
 package Exception;
 
-public class InvalidArgumentException extends RuntimeException{
+public class InvalidArgumentException extends RuntimeException {
     public InvalidArgumentException(String message) {
         super(message);
     }
-
 }

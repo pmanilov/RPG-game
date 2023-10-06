@@ -1,9 +1,11 @@
 package Model;
 
-public class Player extends Creature{
+import Exception.InvalidArgumentException;
+
+public class Player extends Creature {
     private int healCount;
 
-    public Player(String name, int defence, int attack, int maxHealth, int minDamage, int maxDamage) {
+    public Player(String name, int defence, int attack, int maxHealth, int minDamage, int maxDamage) throws InvalidArgumentException {
         super(name, defence, attack, maxHealth, minDamage, maxDamage);
         this.healCount = 0;
     }

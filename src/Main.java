@@ -1,11 +1,13 @@
 import Model.Monster;
 import Model.Player;
 
+import Exception.InvalidArgumentException;
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidArgumentException {
         System.out.println("Enter your name:");
         Scanner in = new Scanner(System.in);
         String name = in.next();

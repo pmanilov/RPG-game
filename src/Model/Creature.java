@@ -4,27 +4,24 @@ import Exception.InvalidArgumentException;
 import java.util.Random;
 
 public class Creature {
-    protected String name;
-    protected int defence;
-    protected int attack;
-    protected int health;
-    protected int maxHealth;
-    protected int minDamage;
-    protected int maxDamage;
-    protected boolean alive;
+    private String name;
+    private int defence;
+    private int attack;
+    private int health;
+    private int maxHealth;
+    private int minDamage;
+    private int maxDamage;
+    private boolean alive;
 
     public Creature(String name, int defence, int attack, int maxHealth, int minDamage, int maxDamage) {
-        validateDefence(defence);
-        validateAttack(attack);
-        validateHealth(maxHealth);
-        validateMinMaxDamage(minDamage, maxDamage);
         this.name = name;
-        this.defence = defence;
-        this.attack = attack;
-        this.maxHealth = maxHealth;
-        this.health = maxHealth;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
+        this.setDefence(defence);
+        this.setAttack(attack);
+        this.setMaxHealth(maxHealth);
+        this.setHealth(maxHealth);
+        this.validateMinMaxDamage(minDamage, maxDamage);
+        this.setMinDamage(minDamage);
+        this.setMaxDamage(maxDamage);
         this.alive = true;
     }
 
@@ -32,13 +29,14 @@ public class Creature {
         if(!this.alive){
             return;
         }
-        System.out.println(this.name + " attacks "+creature.name);
-        int modifier = this.attack - creature.defence + 1;
+        System.out.println(this.name + " attacks "+ creature.name);
+        int modifier = this.attack - creature.defence >= 0 ? this.attack - creature.defence + 1 : 1;
         Random random = new Random();
         for (int i = 0; i < modifier; i++) {
             int toss = random.nextInt(6);
             if(toss >= 4) {
                 creature.health -= random.nextInt(this.maxDamage - this.minDamage + 1) + this.minDamage;
+                break;
             }
         }
         if(creature.health <= 0) {
@@ -65,10 +63,13 @@ public class Creature {
         }
     }
 
-    protected void validateMinMaxDamage(int minDamage, int maxDamage) {
-        if(minDamage < 1 || maxDamage < 1) {
+    protected void validateDamage(int damage) {
+        if(damage < 1){
             throw new InvalidArgumentException("Negative value of  damage");
         }
+    }
+
+    protected void validateMinMaxDamage(int minDamage, int maxDamage) {
         if(minDamage > maxDamage) {
             throw new InvalidArgumentException("Maximum damage may be more than minimum damage");
         }
@@ -78,7 +79,7 @@ public class Creature {
         return alive;
     }
 
-    public void setAlive(boolean alive) {
+    protected void setAlive(boolean alive) {
         this.alive = alive;
     }
 
@@ -86,7 +87,7 @@ public class Creature {
         return name;
     }
 
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
@@ -94,8 +95,8 @@ public class Creature {
         return minDamage;
     }
 
-    public void setMinDamage(int minDamage) {
-        validateMinMaxDamage(minDamage, this.maxDamage);
+    protected void setMinDamage(int minDamage) {
+        validateDamage(minDamage);
         this.minDamage = minDamage;
     }
 
@@ -103,8 +104,8 @@ public class Creature {
         return maxDamage;
     }
 
-    public void setMaxDamage(int maxDamage) {
-        validateMinMaxDamage(this.minDamage, maxDamage);
+    protected void setMaxDamage(int maxDamage) {
+        validateDamage(maxDamage);
         this.maxDamage = maxDamage;
     }
 
@@ -112,7 +113,7 @@ public class Creature {
         return defence;
     }
 
-    public void setDefence(int defence) {
+    protected void setDefence(int defence) {
         validateDefence(defence);
         this.defence = defence;
     }
@@ -121,7 +122,7 @@ public class Creature {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    protected void setAttack(int attack) {
         validateAttack(attack);
         this.attack = attack;
     }
@@ -130,8 +131,11 @@ public class Creature {
         return health;
     }
 
-    public void setHealth(int health) {
+    protected void setHealth(int health) {
         validateHealth(health);
+        if(health > maxHealth) {
+            throw new InvalidArgumentException("Health can`t be more than maximum health");
+        }
         this.health = health;
     }
 
@@ -139,7 +143,7 @@ public class Creature {
         return maxHealth;
     }
 
-    public  void setMaxHealth(int maxHealth) {
+    protected  void setMaxHealth(int maxHealth) {
         validateHealth(maxHealth);
         this.maxHealth = maxHealth;
     }

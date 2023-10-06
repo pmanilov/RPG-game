@@ -31,10 +31,11 @@ public class Main {
         while (player.isAlive()) {
             System.out.println("Your HP: " + player.getHealth());
             System.out.println("Healing left: " + (4 - player.getHealCount()));
-            System.out.println(name + ", you meet monster. Enter 1 to fight, 2 to heal and then fight");
+            System.out.println(name + ", you meet monster. Enter 1 to fight, 2 to heal");
             int action = in.nextInt();
             if(action == 2) {
                 player.heal();
+                continue;
             } else if(action != 1) {
                 System.out.println("Incorrect action");
                 continue;

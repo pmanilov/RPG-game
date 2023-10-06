@@ -9,15 +9,16 @@ public class Player extends Creature{
     }
 
     public void heal() {
-        if(!this.alive){
+        if(!this.isAlive()){
             return;
         }
         if(healCount < 4) {
-            this.health += this.maxHealth * 0.3;
+            int healthAfterHealing = (int) (this.getHealth() + this.getMaxHealth() * 0.3);
             healCount++;
-            if (this.health > this.maxHealth) {
-                this.health = this.maxHealth;
+            if (healthAfterHealing > this.getMaxHealth()) {
+                healthAfterHealing = this.getMaxHealth();
             }
+            this.setHealth(healthAfterHealing);
         } else {
             System.out.println("The number of healing has been exhausted");
         }
